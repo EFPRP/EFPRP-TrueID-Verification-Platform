@@ -264,7 +264,7 @@
             <div class="divider">OR MANUAL ENTRY</div>
 
             <input type="text" id="inputId" placeholder="Enter ID Number" autocomplete="off">
-            <button class="btn-submit" onclick="verifyId()">Verify Authority</button>
+            <button class="btn-submit" onclick="verifyId()">Verify ID</button>
             
             <div id="system-message" class="system-msg"></div>
 
@@ -365,7 +365,7 @@
                     statusSpan.className = "status-pill status-active";
                     digitalId.classList.remove("terminated-bg");
                     clearance.style.display = "grid";
-                    displayMessage('success', "Identity Confirmed. Authority verified.");
+                    displayMessage('success', "Identity Confirmed. ID verified.");
                 } else {
                     statusSpan.className = "status-pill status-terminated";
                     digitalId.classList.add("terminated-bg");
