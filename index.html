@@ -3,7 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EFPRP TrueID Verification</title>
+    
+    <title>EFPRP TrueID Verification - European Fire Prevention & Rural Preservation Organization</title>
+    <meta name="description" content="This ID Verification flow is used to verify the ID of an EFPRP PBO. We implemented this service to allow everyone to authenticate our volunteers or PBOs to prevent fraud, identity theft or impersonation.">
+    <meta name="robots" content="index, follow">
+
+    <meta property="og:title" content="EFPRP TrueID Verification">
+    <meta property="og:description" content="Official identity authentication portal for the EFPRP. Verify Pro-Bono Operative credentials instantly.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://verify.efprp.org">
+    <meta property="og:image" content="https://www.efprp.org/web/image/2104-b8c01a69/Copie%20de%20EFPRP_LARGE_GOOGLE_LOGO%20%28182%20x%2050%20px%29.webp">
+
+    <link rel="icon" type="image/png" href="FAVICON_EFPRP.png">
+    <link rel="apple-touch-icon" href="FAVICON_EFPRP.png">
+
     <script src="https://unpkg.com/html5-qrcode"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;700&family=Inter:wght@400;500;600&display=swap');
@@ -336,7 +349,7 @@
                     canvas.toBlob(blob => {
                         html5QrCode.scanFile(new File([blob], "opt.jpg", { type: "image/jpeg" }), true)
                             .then(text => { document.getElementById("inputId").value = text; verifyId(); })
-                            .catch(err => displayMessage('error', "Barcode not recognized. Ensure clear lighting and a steady shot."));
+                            .catch(err => displayMessage('error', "Barcode not recognized. Ensure clear lighting."));
                     }, 'image/jpeg', 0.9);
                 };
                 img.src = event.target.result;
