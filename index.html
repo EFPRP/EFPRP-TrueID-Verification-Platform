@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EFPRP TrueID Verification</title>
+    <script src="https://unpkg.com/html5-qrcode"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;700&family=Inter:wght@400;500;600&display=swap');
+        
+        :root {
+            --efprp-green: #11804B; 
+            --efprp-green-hover: #0D633A;
+            --efprp-red: #EF4444;   
+            --text-dark: #1E293B;
+            --text-muted: #64748B;
+            --border-light: #E2E8F0;
+            --bg-light: #F8FAFC;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0; padding: 0;
+            background-color: #FFFFFF;
+            color: var(--text-dark);
+            display: flex; flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* --- Main Container --- */
+        .main-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            width: 100%;
+            box-sizing: border-box;
+            flex: 1;
+        }
+
+        /* --- Header Section --- */
+        .header-section {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            margin-bottom: 40px;
+            border-bottom: 1px solid var(--border-light);
+            padding-bottom: 30px;
+        }
+        @media(min-width: 900px) {
+            .header-section {
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+            }
+        }
+        
+        .logo-block img {
+            height: 90px;
+            width: auto;
+            display: block;
+        }
+
+        .support-buttons {
+            display: flex;
+            flex-direction: row;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .btn-outline {
+            display: block;
+            text-align: center;
+            padding: 10px 15px;
+            border: 1px solid var(--efprp-green);
+            background-color: transparent;
+            color: var(--efprp-green);
+            border-radius: 4px;
+            text-decoration: none;
+            font-size: 0.8rem;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+        .btn-outline:hover {
+            background-color: rgba(17, 128, 75, 0.05);
+        }
+
+        .hero-title {
+            margin-bottom: 40px;
+        }
+        .hero-title h1 {
+            font-family: 'Montserrat', sans-serif;
+            margin: 0 0 10px 0;
+            font-size: 2.2rem;
+            color: var(--efprp-green);
+            font-weight: 300;
+        }
+        .hero-title h1 strong { font-weight: 700; }
+        .hero-title p {
+            font-family: 'Montserrat', sans-serif;
+            margin: 0;
+            font-size: 0.95rem;
+            color: var(--text-dark);
+        }
+
+        /* --- Explanation Section --- */
+        .info-section { 
+            width: 100%; 
+            margin-bottom: 50px;
+        }
+        details { border-bottom: 1px solid var(--border-light); }
+        summary {
+            font-family: 'Montserrat', sans-serif;
+            padding: 20px 0; font-size: 1.1rem; font-weight: 500;
+            cursor: pointer; list-style: none; outline: none;
+            display: flex; justify-content: space-between; align-items: center;
+            color: var(--text-dark);
+        }
+        summary::-webkit-details-marker { display: none; }
+        summary::after {
+            content: '';
+            display: inline-block;
+            width: 8px; height: 8px;
+            border-right: 2px solid var(--text-muted);
+            border-bottom: 2px solid var(--text-muted);
+            transform: rotate(45deg);
+            transition: transform 0.3s;
+        }
+        details[open] summary::after { transform: rotate(-135deg); }
+        .details-content { padding: 0 0 20px 0; font-size: 0.95rem; color: var(--text-muted); line-height: 1.6; }
+        .details-content a { color: var(--efprp-green); text-decoration: underline; }
+
+        /* --- Verification Form --- */
+        .auth-card {
+            background: #FFFFFF;
+            border: 1px solid var(--border-light);
+            border-radius: 12px;
+            padding: 40px;
+            width: 100%; max-width: 500px;
+            margin: 20px auto 60px auto;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.04);
+            text-align: center;
+            box-sizing: border-box;
+        }
+        .auth-card-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 25px;
+            color: var(--text-dark);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .btn-scan {
+            background-color: var(--efprp-green);
+            color: #fff; border: none; padding: 16px 28px;
+            border-radius: 6px; font-size: 1rem; font-weight: 600;
+            cursor: pointer; width: 100%; text-transform: uppercase;
+            transition: background-color 0.3s;
+        }
+        .btn-scan:hover { background-color: var(--efprp-green-hover); }
+        
+        .divider { display: flex; align-items: center; margin: 25px 0; color: var(--text-muted); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; }
+        .divider::before, .divider::after { content: ''; flex: 1; border-bottom: 1px solid var(--border-light); }
+        .divider:not(:empty)::before { margin-right: .5em; }
+        .divider:not(:empty)::after { margin-left: .5em; }
+        
+        input[type="text"] {
+            width: 100%; padding: 16px; background-color: var(--bg-light);
+            border: 1px solid var(--border-light); color: var(--text-dark);
+            border-radius: 6px; font-size: 1rem; text-align: center; margin-bottom: 15px; box-sizing: border-box;
+            transition: border-color 0.3s;
+        }
+        input[type="text"]:focus { outline: none; border-color: var(--efprp-green); }
+        
+        .btn-submit {
+            width: 100%; padding: 16px; background-color: var(--bg-light);
+            color: var(--text-dark); border: 1px solid var(--border-light);
+            border-radius: 6px; font-size: 1rem; font-weight: 600; cursor: pointer;
+            transition: all 0.3s;
+        }
+        .btn-submit:hover { background-color: var(--border-light); }
+
+        /* --- Results --- */
+        .system-msg { margin-top: 20px; padding: 12px; border-radius: 6px; font-weight: 500; font-size: 0.9rem; display: none; }
+        .msg-success { background-color: rgba(17, 128, 75, 0.1); border: 1px solid var(--efprp-green); color: var(--efprp-green); }
+        .msg-error { background-color: rgba(239, 68, 68, 0.1); border: 1px solid var(--efprp-red); color: var(--efprp-red); }
+        
+        #result-panel { display: none; margin-top: 30px; }
+        .digital-id {
+            background: var(--bg-light);
+            border: 1px solid var(--border-light); border-radius: 8px;
+            padding: 20px; display: flex; align-items: center; text-align: left;
+        }
+        .digital-id.terminated-bg { background: rgba(239, 68, 68, 0.05); border-color: rgba(239, 68, 68, 0.2); }
+        .id-photo { width: 80px; height: 80px; border-radius: 8px; border: 2px solid var(--efprp-green); margin-right: 20px; object-fit: cover; }
+        .terminated-bg .id-photo { border-color: var(--efprp-red); }
+        .id-data p { margin: 0 0 4px 0; font-size: 0.75rem; color: var(--text-muted); }
+        .id-data strong { color: var(--text-dark); font-size: 0.9rem; display: block; font-weight: 600; }
+        .status-pill { display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 0.7rem; font-weight: 700; margin-top: 5px; }
+        .status-active { background-color: var(--efprp-green); color: #fff; }
+        .status-terminated { background-color: var(--efprp-red); color: #fff; }
+        
+        .clearance-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 15px; }
+        .clearance-box { background-color: #fff; border: 1px solid var(--border-light); border-radius: 6px; padding: 12px 5px; text-align: center; }
+        .clearance-label { display: block; color: var(--text-muted); font-size: 0.6rem; text-transform: uppercase; margin-bottom: 4px; }
+        .clearance-value { color: var(--efprp-green); font-weight: 700; font-size: 0.75rem; }
+
+        /* --- Footer --- */
+        .site-footer {
+            padding: 40px 20px; text-align: center;
+            font-size: 0.75rem; color: var(--text-muted); line-height: 1.6;
+            background-color: var(--bg-light); border-top: 1px solid var(--border-light);
+        }
+        .footer-content { max-width: 1000px; margin: 0 auto; text-align: left; }
+    </style>
+</head>
+<body>
+
+    <main class="main-container">
+        
+        <div class="header-section">
+            <div class="logo-block">
+                <img src="https://www.efprp.org/web/image/2104-b8c01a69/Copie%20de%20EFPRP_LARGE_GOOGLE_LOGO%20%28182%20x%2050%20px%29.webp" alt="EFPRP Official Logo">
+            </div>
+            <div class="support-buttons">
+                <a href="mailto:support@efprp.org" class="btn-outline">Contact General Support</a>
+                <a href="mailto:internal@efprp.org" class="btn-outline">Contact IS&IA Department | Report Submission</a>
+            </div>
+        </div>
+
+        <div class="hero-title">
+            <h1><strong>EFPRP</strong> TrueID Verification</h1>
+            <p><strong>Fighting</strong> against <strong>scams, fraud and impersonation.</strong></p>
+        </div>
+
+        <div class="info-section">
+            <details open>
+                <summary>What is the EFPRP TrueID Verification?</summary>
+                <div class="details-content">
+                    <p>This ID Verification flow is used to <strong>verify the ID of an EFPRP PBO (Pro-Bono Operative)</strong>. We implemented this service to allow <strong>everyone to authenticate our volunteers or PBOs to prevent fraud, identity theft or impersonation.</strong></p>
+                    <p>The use of this service is <strong>free and open-source</strong>. To verify an ID, simply input or scan the ID number (<em>present on the barcode</em>) behind the EFPRP ID. If the output shows a PBO, the <strong>ID is verified</strong>, else, <strong>there is no employee associated with the ID number or ID itself.</strong></p>
+                    <p>This website is <strong>owned, maintained and updated</strong> by the <em>European Fire Prevention & Rural Preservation Organization (EFPRP)</em> (<a href="https://www.efprp.org" target="_blank">www.efprp.org</a>). For any questions or concerns, please, contact the Support Team.</p>
+                </div>
+            </details>
+
+            <details>
+                <summary>The ID doesn't exist. What do I do?</summary>
+                <div class="details-content">
+                    <p>If, after you checked multiple times for errors or typos, <strong>the ID you tried to verify, doesn't exist</strong>, please, select the option <em>"Contact IS&IA Department"</em> mentioning the ID you tried to verify, any evidence (photo, audio, video) from the individual that was carrying the EFPRP Identification and the location of the incident.</p>
+                    <p>Our Internal Affairs Division will investigate this matter and <strong>coordinate with local law enforcement to clarify the situation</strong>. Each step of the way, you will be informed and updated.</p>
+                    <p><strong>All IS&IA contact remains confidential.</strong></p>
+                </div>
+            </details>
+        </div>
+
+        <div class="auth-card">
+            <div class="auth-card-title">Identity Authentication</div>
+
+            <input type="file" id="camera-input" accept="image/jpeg, image/png, image/webp" capture="environment" style="display: none;">
+            <div id="hidden-reader" style="display: none;"></div>
+
+            <button class="btn-scan" onclick="document.getElementById('camera-input').click()">Capture ID Photo</button>
+
+            <div class="divider">OR MANUAL ENTRY</div>
+
+            <input type="text" id="inputId" placeholder="Enter ID Number" autocomplete="off">
+            <button class="btn-submit" onclick="verifyId()">Verify Authority</button>
+            
+            <div id="system-message" class="system-msg"></div>
+
+            <div id="result-panel">
+                <div id="digital-id" class="digital-id">
+                    <img id="employeePhoto" class="id-photo" src="" alt="Photo">
+                    <div class="id-data">
+                        <p>NAME<br><strong id="employeeName"></strong></p>
+                        <p>SURNAME<br><strong id="employeeSurname"></strong></p>
+                        <p>EFPRP ID<br><strong id="employeeId"></strong></p>
+                        <div id="employeeStatus" class="status-pill"></div>
+                    </div>
+                </div>
+
+                <div id="clearance-container" class="clearance-grid" style="display:none;">
+                    <div class="clearance-box"><span class="clearance-label">EIRT Auth</span><span class="clearance-value">AUTHORIZED</span></div>
+                    <div class="clearance-box"><span class="clearance-label">AWID Status</span><span class="clearance-value">ACTIVE</span></div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <footer class="site-footer">
+        <div class="footer-content">
+            <p>Copyright © European Fire Prevention & Rural Preservation Organization (EFPRP) - All rights reserved.</p>
+            <p>European Fire Prevention & Rural Preservation Organization (EFPRP) - A non-profit organization registered in France under the RNA number W313039674. Check official documentation on how to prevent scams and fraud <a href="https://support.efprp.org" target="_blank">here</a>. Official EFPRP addresses always end in @efprp.org. This website does not use any type of cookies, nor stores any type of data.</p>
+        </div>
+    </footer>
+
+    <script>
+        const employeeData = {
+            5162403556: { name: "Alexios", id: 5162403556, surname: "ELIZALDE XIROKOSTA", status: "ACTIVE", photo: "https://www.efprp.org/web/image/1596-c1bce3e4/Design%20sans%20titre.webp" },
+            776551909: { name: "UNDISCLOSED", surname: "UNDISCLOSED", id: 776551909, status: "TERMINATED", photo: "https://cdn-icons-png.freepik.com/512/3682/3682323.png" },
+            784596123: { name: "Rémi", surname: "BAYSANG", id: 784596123, status: "ACTIVE", photo: "https://www.efprp.org/web/image/440-e8ab62b0/67639922-user_photo_2024_10_22_17_57_39.webp" },
+            669873320: { name: "Romain", surname: "BROUAT", id: 669873320, status: "ACTIVE", photo: "https://www.efprp.org/web/image/595-a158f419/Design%20sans%20titre.webp" },
+            90025463321: { name: "UNDISCLOSED", surname: "UNDISCLOSED", id: 90025463321, status: "TERMINATED", photo: "https://cdn-icons-png.freepik.com/512/3682/3682323.png" },
+            6667805537: { name: "UNDISCLOSED", surname: "UNDISCLOSED", id: 6667805537, status: "TERMINATED", photo: "https://cdn-icons-png.freepik.com/512/3682/3682323.png" },
+            5567800112: { name: "Romain", surname: "ISTACE", id: 5567800112, status: "ACTIVE", photo: "https://www.efprp.org/web/image/585-51418b4d/WhatsApp%2520Image%25202024-10-27%2520at%25204.svg" },
+            6657441025: { name: "UNDISCLOSED", surname: "UNDISCLOSED", id: 6657441025, status: "TERMINATED", photo: "https://cdn-icons-png.freepik.com/512/3682/3682323.png" },
+            9995477813: { name: "UNDISCLOSED", surname: "UNDISCLOSED", id: 9995477813, status: "TERMINATED", photo: "https://cdn-icons-png.freepik.com/512/3682/3682323.png" }
+        };
+
+        const html5QrCode = new Html5Qrcode("hidden-reader");
+        const cameraInput = document.getElementById('camera-input');
+
+        function displayMessage(type, text) {
+            const msgDiv = document.getElementById("system-message");
+            msgDiv.className = `system-msg ${type === 'error' ? 'msg-error' : 'msg-success'}`;
+            msgDiv.textContent = text; msgDiv.style.display = "block";
+        }
+
+        cameraInput.addEventListener('change', e => {
+            if (e.target.files.length == 0) return;
+            displayMessage('success', "Analyzing secure capture...");
+            const file = e.target.files[0];
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                const img = new Image();
+                img.onload = function() {
+                    const canvas = document.createElement('canvas');
+                    const ctx = canvas.getContext('2d');
+                    const MAX_DIMENSION = 1200;
+                    let width = img.width; let height = img.height;
+                    if (width > height) { if (width > MAX_DIMENSION) { height *= MAX_DIMENSION / width; width = MAX_DIMENSION; } }
+                    else { if (height > MAX_DIMENSION) { width *= MAX_DIMENSION / height; height = MAX_DIMENSION; } }
+                    canvas.width = width; canvas.height = height;
+                    ctx.drawImage(img, 0, 0, width, height);
+                    canvas.toBlob(blob => {
+                        html5QrCode.scanFile(new File([blob], "opt.jpg", { type: "image/jpeg" }), true)
+                            .then(text => { document.getElementById("inputId").value = text; verifyId(); })
+                            .catch(err => displayMessage('error', "Barcode not recognized. Ensure clear lighting and a steady shot."));
+                    }, 'image/jpeg', 0.9);
+                };
+                img.src = event.target.result;
+            };
+            reader.readAsDataURL(file);
+        });
+
+        function verifyId() {
+            const val = document.getElementById("inputId").value.trim();
+            const id = parseInt(val);
+            const panel = document.getElementById("result-panel");
+            const digitalId = document.getElementById("digital-id");
+            const clearance = document.getElementById("clearance-container");
+            const statusSpan = document.getElementById("employeeStatus");
+
+            if (employeeData.hasOwnProperty(id)) {
+                const emp = employeeData[id];
+                document.getElementById("employeeName").textContent = emp.name;
+                document.getElementById("employeeSurname").textContent = emp.surname;
+                document.getElementById("employeeId").textContent = emp.id;
+                document.getElementById("employeePhoto").src = emp.photo;
+                statusSpan.textContent = emp.status;
+                panel.style.display = "block";
+                
+                if (emp.status === "ACTIVE") {
+                    statusSpan.className = "status-pill status-active";
+                    digitalId.classList.remove("terminated-bg");
+                    clearance.style.display = "grid";
+                    displayMessage('success', "Identity Confirmed. Authority verified.");
+                } else {
+                    statusSpan.className = "status-pill status-terminated";
+                    digitalId.classList.add("terminated-bg");
+                    clearance.style.display = "none";
+                    displayMessage('error', "Officer Terminated. Access Denied.");
+                }
+            } else { 
+                panel.style.display = "none"; 
+                displayMessage('error', "ID not found in the European Registry."); 
+            }
+        }
+    </script>
+</body>
+</html>
