@@ -216,7 +216,7 @@
         .clearance-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 15px; }
         .clearance-box { background-color: #fff; border: 1px solid var(--border-light); border-radius: 6px; padding: 12px 5px; text-align: center; }
         .clearance-label { display: block; color: var(--text-muted); font-size: 0.6rem; text-transform: uppercase; margin-bottom: 4px; }
-        .clearance-value { color: var(--efprp-green); font-weight: 700; font-size: 0.75rem; }
+        .clearance-value { font-weight: 700; font-size: 0.75rem; }
 
         /* --- Footer --- */
         .site-footer {
@@ -288,13 +288,14 @@
                         <p>NAME<br><strong id="employeeName"></strong></p>
                         <p>SURNAME<br><strong id="employeeSurname"></strong></p>
                         <p>EFPRP ID<br><strong id="employeeId"></strong></p>
+                        <p>LOCATION<br><strong id="employeeLocation"></strong></p>
                         <div id="employeeStatus" class="status-pill"></div>
                     </div>
                 </div>
 
                 <div id="clearance-container" class="clearance-grid" style="display:none;">
-                    <div class="clearance-box"><span class="clearance-label">EIRT Auth</span><span class="clearance-value">AUTHORIZED</span></div>
-                    <div class="clearance-box"><span class="clearance-label">AWID Status</span><span class="clearance-value">ACTIVE</span></div>
+                    <div class="clearance-box"><span class="clearance-label">EIRT Auth</span><span id="eirtStatus" class="clearance-value"></span></div>
+                    <div class="clearance-box"><span class="clearance-label">AWID Status</span><span id="awidStatus" class="clearance-value"></span></div>
                 </div>
             </div>
         </div>
@@ -310,16 +311,16 @@
 
     <script>
         const employeeData = {
-            5162403556: { name: "Alexios", id: 5162403556, surname: "ELIZALDE XIROKOSTA", status: "ACTIVE", photo: "https://www.efprp.org/web/image/1596-c1bce3e4/Design%20sans%20titre.webp" },
-            776551909: { name: "UNDISCLOSED", surname: "UNDISCLOSED", id: 776551909, status: "TERMINATED", photo: "https://cdn-icons-png.freepik.com/512/3682/3682323.png" },
-            784596123: { name: "Rémi", surname: "BAYSANG", id: 784596123, status: "ACTIVE", photo: "https://www.efprp.org/web/image/440-e8ab62b0/67639922-user_photo_2024_10_22_17_57_39.webp" },
-            669873320: { name: "Romain", surname: "BROUAT", id: 669873320, status: "ACTIVE", photo: "https://www.efprp.org/web/image/595-a158f419/Design%20sans%20titre.webp" },
-            90025463321: { name: "UNDISCLOSED", surname: "UNDISCLOSED", id: 90025463321, status: "TERMINATED", photo: "https://cdn-icons-png.freepik.com/512/3682/3682323.png" },
-            6667805537: { name: "UNDISCLOSED", surname: "UNDISCLOSED", id: 6667805537, status: "TERMINATED", photo: "https://cdn-icons-png.freepik.com/512/3682/3682323.png" },
-            5567800112: { name: "Romain", surname: "ISTACE", id: 5567800112, status: "ACTIVE", photo: "https://www.efprp.org/web/image/585-51418b4d/WhatsApp%2520Image%25202024-10-27%2520at%25204.svg" },
-            6657441025: { name: "UNDISCLOSED", surname: "UNDISCLOSED", id: 6657441025, status: "TERMINATED", photo: "https://cdn-icons-png.freepik.com/512/3682/3682323.png" },
-            9995477813: { name: "UNDISCLOSED", surname: "UNDISCLOSED", id: 9995477813, status: "TERMINATED", photo: "https://cdn-icons-png.freepik.com/512/3682/3682323.png" },
-            3980036220: { name: "Ricardo", id: 3980036220, surname: "LOZADA ALVAREZ", status: "ACTIVE", photo: "https://www.efprp.org/web/image/3088-d858ddcb/PFP.webp" }
+            5162403556: { name: "Alexios", surname: "ELIZALDE XIROKOSTA", id: 5162403556, location: "GR (Greece)", eirt: true, awid: true, status: "ACTIVE", photo: "https://www.efprp.org/web/image/1596-c1bce3e4/Design%20sans%20titre.webp" },
+            776551909: { name: "UNDISCLOSED", surname: "UNDISCLOSED", id: 776551909, location: "N/A", eirt: false, awid: false, status: "TERMINATED", photo: "https://cdn-icons-png.freepik.com/512/3682/3682323.png" },
+            784596123: { name: "Rémi", surname: "BAYSANG", id: 784596123, location: "FR (France)", eirt: true, awid: false, status: "ACTIVE", photo: "https://www.efprp.org/web/image/440-e8ab62b0/67639922-user_photo_2024_10_22_17_57_39.webp" },
+            669873320: { name: "Romain", surname: "BROUAT", id: 669873320, location: "FR (France)", eirt: false, awid: true, status: "ACTIVE", photo: "https://www.efprp.org/web/image/595-a158f419/Design%20sans%20titre.webp" },
+            90025463321: { name: "UNDISCLOSED", surname: "UNDISCLOSED", id: 90025463321, location: "N/A", eirt: false, awid: false, status: "TERMINATED", photo: "https://cdn-icons-png.freepik.com/512/3682/3682323.png" },
+            6667805537: { name: "UNDISCLOSED", surname: "UNDISCLOSED", id: 6667805537, location: "N/A", eirt: false, awid: false, status: "TERMINATED", photo: "https://cdn-icons-png.freepik.com/512/3682/3682323.png" },
+            5567800112: { name: "Romain", surname: "ISTACE", id: 5567800112, location: "FR (France)", eirt: true, awid: true, status: "ACTIVE", photo: "https://www.efprp.org/web/image/585-51418b4d/WhatsApp%2520Image%25202024-10-27%2520at%25204.svg" },
+            6657441025: { name: "UNDISCLOSED", surname: "UNDISCLOSED", id: 6657441025, location: "N/A", eirt: false, awid: false, status: "TERMINATED", photo: "https://cdn-icons-png.freepik.com/512/3682/3682323.png" },
+            9995477813: { name: "UNDISCLOSED", surname: "UNDISCLOSED", id: 9995477813, location: "N/A", eirt: false, awid: false, status: "TERMINATED", photo: "https://cdn-icons-png.freepik.com/512/3682/3682323.png" },
+            3980036220: { name: "Ricardo", surname: "LOZADA ALVAREZ", id: 3980036220, location: "ES (Spain)", eirt: true, awid: false, status: "ACTIVE", photo: "https://www.efprp.org/web/image/3088-d858ddcb/PFP.webp" }
         };
 
         const html5QrCode = new Html5Qrcode("hidden-reader");
@@ -365,14 +366,26 @@
             const digitalId = document.getElementById("digital-id");
             const clearance = document.getElementById("clearance-container");
             const statusSpan = document.getElementById("employeeStatus");
+            const eirtSpan = document.getElementById("eirtStatus");
+            const awidSpan = document.getElementById("awidStatus");
 
             if (employeeData.hasOwnProperty(id)) {
                 const emp = employeeData[id];
                 document.getElementById("employeeName").textContent = emp.name;
                 document.getElementById("employeeSurname").textContent = emp.surname;
                 document.getElementById("employeeId").textContent = emp.id;
+                document.getElementById("employeeLocation").textContent = emp.location;
                 document.getElementById("employeePhoto").src = emp.photo;
                 statusSpan.textContent = emp.status;
+
+                // Dynamic EIRT Clearance
+                eirtSpan.textContent = emp.eirt ? "AUTHORIZED" : "UNAUTHORIZED";
+                eirtSpan.style.color = emp.eirt ? "var(--efprp-green)" : "var(--efprp-red)";
+
+                // Dynamic AWID Status
+                awidSpan.textContent = emp.awid ? "ACTIVE" : "INACTIVE";
+                awidSpan.style.color = emp.awid ? "var(--efprp-green)" : "var(--efprp-red)";
+
                 panel.style.display = "block";
                 
                 if (emp.status === "ACTIVE") {
