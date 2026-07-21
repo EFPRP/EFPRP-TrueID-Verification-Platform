@@ -205,7 +205,16 @@
             padding: 20px; display: flex; align-items: center; text-align: left;
         }
         .digital-id.terminated-bg { background: rgba(239, 68, 68, 0.05); border-color: rgba(239, 68, 68, 0.2); }
-        .id-photo { width: 80px; height: 80px; border-radius: 8px; border: 2px solid var(--efprp-green); margin-right: 20px; object-fit: cover; }
+        
+        /* Updated image style for round photos */
+        .id-photo { 
+            width: 80px; 
+            height: 80px; 
+            border-radius: 50%; 
+            border: 2px solid var(--efprp-green); 
+            margin-right: 20px; 
+            object-fit: cover; 
+        }
         .terminated-bg .id-photo { border-color: var(--efprp-red); }
         .id-data p { margin: 0 0 4px 0; font-size: 0.75rem; color: var(--text-muted); }
         .id-data strong { color: var(--text-dark); font-size: 0.9rem; display: block; font-weight: 600; }
@@ -288,7 +297,7 @@
                         <p>NAME<br><strong id="employeeName"></strong></p>
                         <p>SURNAME<br><strong id="employeeSurname"></strong></p>
                         <p>EFPRP ID<br><strong id="employeeId"></strong></p>
-                        <p>CURRENT LOCATION<br><strong id="employeeLocation"></strong></p>
+                        <p>LOCATION<br><strong id="employeeLocation"></strong></p>
                         <div id="employeeStatus" class="status-pill"></div>
                     </div>
                 </div>
@@ -320,7 +329,7 @@
             5567800112: { name: "Romain", surname: "ISTACE", id: 5567800112, location: "FR (France)", eirt: true, awid: true, status: "ACTIVE", photo: "https://www.efprp.org/web/image/585-51418b4d/WhatsApp%2520Image%25202024-10-27%2520at%25204.svg" },
             6657441025: { name: "UNDISCLOSED", surname: "UNDISCLOSED", id: 6657441025, location: "N/A", eirt: false, awid: false, status: "TERMINATED", photo: "https://cdn-icons-png.freepik.com/512/3682/3682323.png" },
             9995477813: { name: "UNDISCLOSED", surname: "UNDISCLOSED", id: 9995477813, location: "N/A", eirt: false, awid: false, status: "TERMINATED", photo: "https://cdn-icons-png.freepik.com/512/3682/3682323.png" },
-            3980036220: { name: "Ricardo", surname: "LOZADA ALVAREZ", id: 3980036220, location: "FR (France)", eirt: false, awid: true, status: "ACTIVE", photo: "https://www.efprp.org/web/image/3088-d858ddcb/PFP.webp" }
+            3980036220: { name: "Ricardo", surname: "LOZADA ALVAREZ", id: 3980036220, location: "FR (France)", eirt: true, awid: true, status: "ACTIVE", photo: "https://www.efprp.org/web/image/3088-d858ddcb/PFP.webp" }
         };
 
         const html5QrCode = new Html5Qrcode("hidden-reader");
@@ -397,11 +406,11 @@
                     statusSpan.className = "status-pill status-terminated";
                     digitalId.classList.add("terminated-bg");
                     clearance.style.display = "none";
-                    displayMessage('error', "Officer Terminated. Access Denied.");
+                    displayMessage('error', "Terminated. ID is not valid.");
                 }
             } else { 
                 panel.style.display = "none"; 
-                displayMessage('error', "ID not found in the European Registry."); 
+                displayMessage('error', "ID not found. Check and try again or contact us."); 
             }
         }
     </script>
