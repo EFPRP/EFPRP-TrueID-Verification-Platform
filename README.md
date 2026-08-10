@@ -8,7 +8,7 @@ This repository hosts the front-end architecture for the **TrueID Verification S
 ## Key Features
 - **Native Barcode Intelligence:** Optimized for field use with mobile devices to extract ID data directly from physical cards.
 - **Instant Authentication:** Direct matching against the European Registry for PBO status confirmation.
-- **Clearance Verification:** Real-time display of EIRT Authorization and AWID Investigator status for active officers.
+- **Clearance Verification:** Real-time display of EIRT Authorization and AWID officer status for active officers.
 
 ## Security & GDPR Compliance
 The EFPRP prioritizes data sovereignty and privacy. This system is engineered for strict compliance with European data protection standards:
