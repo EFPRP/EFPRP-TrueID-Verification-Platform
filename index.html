@@ -40,7 +40,6 @@
             min-height: 100vh;
         }
 
-        /* --- Main Container --- */
         .main-container {
             max-width: 1000px;
             margin: 0 auto;
@@ -50,7 +49,6 @@
             flex: 1;
         }
 
-        /* --- Header Section --- */
         .header-section {
             display: flex;
             flex-direction: column;
@@ -114,7 +112,6 @@
             color: var(--text-dark);
         }
 
-        /* --- Explanation Section --- */
         .info-section { 
             width: 100%; 
             margin-bottom: 50px;
@@ -141,7 +138,6 @@
         .details-content { padding: 0 0 20px 0; font-size: 0.95rem; color: var(--text-muted); line-height: 1.6; }
         .details-content a { color: var(--efprp-green); text-decoration: underline; }
 
-        /* --- Verification Form --- */
         .auth-card {
             background: #FFFFFF;
             border: 1px solid var(--border-light);
@@ -193,7 +189,6 @@
         }
         .btn-submit:hover { background-color: var(--border-light); }
 
-        /* --- Results --- */
         .system-msg { margin-top: 20px; padding: 12px; border-radius: 6px; font-weight: 500; font-size: 0.9rem; display: none; }
         .msg-success { background-color: rgba(17, 128, 75, 0.1); border: 1px solid var(--efprp-green); color: var(--efprp-green); }
         .msg-error { background-color: rgba(239, 68, 68, 0.1); border: 1px solid var(--efprp-red); color: var(--efprp-red); }
@@ -206,7 +201,6 @@
         }
         .digital-id.terminated-bg { background: rgba(239, 68, 68, 0.05); border-color: rgba(239, 68, 68, 0.2); }
         
-        /* Updated image style for round photos */
         .id-photo { 
             width: 80px; 
             height: 80px; 
@@ -227,7 +221,6 @@
         .clearance-label { display: block; color: var(--text-muted); font-size: 0.6rem; text-transform: uppercase; margin-bottom: 4px; }
         .clearance-value { font-weight: 700; font-size: 0.75rem; }
 
-        /* --- Footer --- */
         .site-footer {
             padding: 40px 20px; text-align: center;
             font-size: 0.75rem; color: var(--text-muted); line-height: 1.6;
@@ -319,32 +312,18 @@
     </footer>
 
     <script>
-        const employeeData = {
-            5162403556: { name: "Alexios", surname: "ELIZALDE XIROKOSTA", id: 5162403556, location: "FR (France)", eirt: true, awid: true, status: "ACTIVE", photo: "https://www.efprp.org/web/image/1596-c1bce3e4/Design%20sans%20titre.webp" },
-            776551909: { name: "UNDISCLOSED", surname: "UNDISCLOSED", id: 776551909, location: "N/A", eirt: false, awid: false, status: "TERMINATED", photo: "https://cdn-icons-png.freepik.com/512/3682/3682323.png" },
-            784596123: { name: "Rémi", surname: "BAYSANG", id: 784596123, location: "FR (France)", eirt: true, awid: true, status: "ACTIVE", photo: "https://www.efprp.org/web/image/2798-5c7e29aa/3.webp" },
-            669873320: { name: "Romain", surname: "BROUAT", id: 669873320, location: "FR (France)", eirt: true, awid: true, status: "ACTIVE", photo: "https://www.efprp.org/web/image/2800-fefdfa10/2.webp" },
-            90025463321: { name: "UNDISCLOSED", surname: "UNDISCLOSED", id: 90025463321, location: "N/A", eirt: false, awid: false, status: "TERMINATED", photo: "https://cdn-icons-png.freepik.com/512/3682/3682323.png" },
-            6667805537: { name: "UNDISCLOSED", surname: "UNDISCLOSED", id: 6667805537, location: "N/A", eirt: false, awid: false, status: "TERMINATED", photo: "https://cdn-icons-png.freepik.com/512/3682/3682323.png" },
-            5567800112: { name: "Romain", surname: "ISTACE", id: 5567800112, location: "FR (France)", eirt: true, awid: true, status: "ACTIVE", photo: "https://www.efprp.org/web/image/585-51418b4d/WhatsApp%2520Image%25202024-10-27%2520at%25204.svg" },
-            6657441025: { name: "UNDISCLOSED", surname: "UNDISCLOSED", id: 6657441025, location: "N/A", eirt: false, awid: false, status: "TERMINATED", photo: "https://cdn-icons-png.freepik.com/512/3682/3682323.png" },
-            9995477813: { name: "UNDISCLOSED", surname: "UNDISCLOSED", id: 9995477813, location: "N/A", eirt: false, awid: false, status: "TERMINATED", photo: "https://cdn-icons-png.freepik.com/512/3682/3682323.png" },
-            3980036220: { name: "Ricardo", surname: "LOZADA ALVAREZ", id: 3980036220, location: "FR (France)", eirt: true, awid: true, status: "ACTIVE", photo: "https://www.efprp.org/web/image/3088-d858ddcb/PFP.webp" },
-            6900317752: { name: "Nils", surname: "BRENNE", id: 6900317752, location: "FR (France)", eirt: false, awid: false, status: "ACTIVE", photo: "https://www.efprp.org/web/image/3377-2a1767ad/PFP.webp" },
-            3099730254: { name: "Jordi", surname: "VILLANOVA EDERLY", id: 3099730254, location: "FR (France)", eirt: false, awid: false, status: "ACTIVE", photo: "https://www.efprp.org/web/image/3379-7465d87a/PFP.webp" }
-        };
-
         const html5QrCode = new Html5Qrcode("hidden-reader");
         const cameraInput = document.getElementById('camera-input');
 
         function displayMessage(type, text) {
             const msgDiv = document.getElementById("system-message");
             msgDiv.className = `system-msg ${type === 'error' ? 'msg-error' : 'msg-success'}`;
-            msgDiv.textContent = text; msgDiv.style.display = "block";
+            msgDiv.textContent = text;
+            msgDiv.style.display = "block";
         }
 
         cameraInput.addEventListener('change', e => {
-            if (e.target.files.length == 0) return;
+            if (e.target.files.length === 0) return;
             displayMessage('success', "Analyzing secure capture...");
             const file = e.target.files[0];
             const reader = new FileReader();
@@ -354,15 +333,20 @@
                     const canvas = document.createElement('canvas');
                     const ctx = canvas.getContext('2d');
                     const MAX_DIMENSION = 1200;
-                    let width = img.width; let height = img.height;
-                    if (width > height) { if (width > MAX_DIMENSION) { height *= MAX_DIMENSION / width; width = MAX_DIMENSION; } }
-                    else { if (height > MAX_DIMENSION) { width *= MAX_DIMENSION / height; height = MAX_DIMENSION; } }
-                    canvas.width = width; canvas.height = height;
+                    let width = img.width; 
+                    let height = img.height;
+                    if (width > height) { 
+                        if (width > MAX_DIMENSION) { height *= MAX_DIMENSION / width; width = MAX_DIMENSION; } 
+                    } else { 
+                        if (height > MAX_DIMENSION) { width *= MAX_DIMENSION / height; height = MAX_DIMENSION; } 
+                    }
+                    canvas.width = width; 
+                    canvas.height = height;
                     ctx.drawImage(img, 0, 0, width, height);
                     canvas.toBlob(blob => {
                         html5QrCode.scanFile(new File([blob], "opt.jpg", { type: "image/jpeg" }), true)
                             .then(text => { document.getElementById("inputId").value = text; verifyId(); })
-                            .catch(err => displayMessage('error', "Barcode not recognized. Ensure clear lighting."));
+                            .catch(() => displayMessage('error', "Barcode not recognized. Ensure clear lighting."));
                     }, 'image/jpeg', 0.9);
                 };
                 img.src = event.target.result;
@@ -370,49 +354,78 @@
             reader.readAsDataURL(file);
         });
 
-        function verifyId() {
+        async function verifyId() {
             const val = document.getElementById("inputId").value.trim();
-            const id = parseInt(val);
             const panel = document.getElementById("result-panel");
             const digitalId = document.getElementById("digital-id");
             const clearance = document.getElementById("clearance-container");
             const statusSpan = document.getElementById("employeeStatus");
             const eirtSpan = document.getElementById("eirtStatus");
             const awidSpan = document.getElementById("awidStatus");
+            const submitBtn = document.querySelector(".btn-submit");
 
-            if (employeeData.hasOwnProperty(id)) {
-                const emp = employeeData[id];
-                document.getElementById("employeeName").textContent = emp.name;
-                document.getElementById("employeeSurname").textContent = emp.surname;
-                document.getElementById("employeeId").textContent = emp.id;
-                document.getElementById("employeeLocation").textContent = emp.location;
-                document.getElementById("employeePhoto").src = emp.photo;
-                statusSpan.textContent = emp.status;
+            if (!val) {
+                displayMessage('error', "Please enter an ID number.");
+                return;
+            }
 
-                // Dynamic EIRT Clearance
-                eirtSpan.textContent = emp.eirt ? "AUTHORIZED" : "UNAUTHORIZED";
-                eirtSpan.style.color = emp.eirt ? "var(--efprp-green)" : "var(--efprp-red)";
+            submitBtn.disabled = true;
+            submitBtn.textContent = "Verifying...";
 
-                // Dynamic AWID Status
-                awidSpan.textContent = emp.awid ? "ACTIVE" : "INACTIVE";
-                awidSpan.style.color = emp.awid ? "var(--efprp-green)" : "var(--efprp-red)";
+            try {
+                const response = await fetch(`https://api.efprp.org/api/pbo/verify/${encodeURIComponent(val)}`);
+                const result = await response.json();
 
-                panel.style.display = "block";
-                
-                if (emp.status === "ACTIVE") {
-                    statusSpan.className = "status-pill status-active";
-                    digitalId.classList.remove("terminated-bg");
-                    clearance.style.display = "grid";
-                    displayMessage('success', "Identity Confirmed. ID verified.");
-                } else {
-                    statusSpan.className = "status-pill status-terminated";
-                    digitalId.classList.add("terminated-bg");
-                    clearance.style.display = "none";
-                    displayMessage('error', "Terminated. ID is not valid.");
+                if (response.status === 429) {
+                    panel.style.display = "none";
+                    displayMessage('error', "Rate limit reached: Maximum 5 checks per 10 minutes. Please wait.");
+                    return;
                 }
-            } else { 
-                panel.style.display = "none"; 
-                displayMessage('error', "ID not found. Check and try again or contact us."); 
+
+                if (response.status === 403) {
+                    panel.style.display = "none";
+                    displayMessage('error', "Access restricted from this geographic region.");
+                    return;
+                }
+
+                if (response.ok && result.found) {
+                    const emp = result.data;
+                    document.getElementById("employeeName").textContent = emp.name;
+                    document.getElementById("employeeSurname").textContent = emp.surname;
+                    document.getElementById("employeeId").textContent = emp.id;
+                    document.getElementById("employeeLocation").textContent = emp.location;
+                    document.getElementById("employeePhoto").src = emp.photo;
+                    statusSpan.textContent = emp.status;
+
+                    eirtSpan.textContent = emp.eirt ? "AUTHORIZED" : "UNAUTHORIZED";
+                    eirtSpan.style.color = emp.eirt ? "var(--efprp-green)" : "var(--efprp-red)";
+
+                    awidSpan.textContent = emp.awid ? "ACTIVE" : "INACTIVE";
+                    awidSpan.style.color = emp.awid ? "var(--efprp-green)" : "var(--efprp-red)";
+
+                    panel.style.display = "block";
+
+                    if (emp.status === "ACTIVE") {
+                        statusSpan.className = "status-pill status-active";
+                        digitalId.classList.remove("terminated-bg");
+                        clearance.style.display = "grid";
+                        displayMessage('success', "Identity Confirmed. ID verified.");
+                    } else {
+                        statusSpan.className = "status-pill status-terminated";
+                        digitalId.classList.add("terminated-bg");
+                        clearance.style.display = "none";
+                        displayMessage('error', "Terminated. ID is not valid.");
+                    }
+                } else {
+                    panel.style.display = "none";
+                    displayMessage('error', "ID not found. Check and try again or contact us.");
+                }
+            } catch {
+                panel.style.display = "none";
+                displayMessage('error', "Verification service unreachable. Please retry shortly.");
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = "Verify ID";
             }
         }
     </script>
