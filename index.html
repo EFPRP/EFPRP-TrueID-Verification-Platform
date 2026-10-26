@@ -3,283 +3,477 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="FAVICON_EFPRP.png">
+    <title>EFPRP | TrueID Verification Portal</title>
     
-    <title>EFPRP TrueID Verification - European Fire Prevention & Rural Preservation Organization</title>
     <meta name="description" content="This ID Verification flow is used to verify the ID of an EFPRP PBO. We implemented this service to allow everyone to authenticate our volunteers or PBOs to prevent fraud, identity theft or impersonation.">
     <meta name="robots" content="index, follow">
 
-    <meta property="og:title" content="EFPRP TrueID Verification">
-    <meta property="og:description" content="Official identity authentication portal for the EFPRP. Verify Pro-Bono Operative credentials instantly.">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://verify.efprp.org">
-    <meta property="og:image" content="https://www.efprp.org/web/image/2104-b8c01a69/Copie%20de%20EFPRP_LARGE_GOOGLE_LOGO%20%28182%20x%2050%20px%29.webp">
-
-    <link rel="icon" type="image/png" href="FAVICON_EFPRP.png">
-    <link rel="apple-touch-icon" href="FAVICON_EFPRP.png">
-
     <script src="https://unpkg.com/html5-qrcode"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;700&family=Inter:wght@400;500;600&display=swap');
-        
         :root {
-            --efprp-green: #11804B; 
-            --efprp-green-hover: #0D633A;
-            --efprp-red: #EF4444;   
-            --text-dark: #1E293B;
-            --text-muted: #64748B;
-            --border-light: #E2E8F0;
-            --bg-light: #F8FAFC;
+            --header-bg: #000000;
+            --gold-accent: #ffd000;
+            --efprp-green: #006837;
+            --efprp-green-dark: #004d29;
+            --efprp-red: #b91c1c;
+            --bg-light: #f5f7f6;
+            --footer-bg: #e6ece8;
+            --border-color: #dce3df;
+            --text-main: #222222;
+            --text-muted: #555555;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
 
         body {
-            font-family: 'Inter', sans-serif;
-            margin: 0; padding: 0;
-            background-color: #FFFFFF;
-            color: var(--text-dark);
-            display: flex; flex-direction: column;
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-main);
+            display: flex;
+            flex-direction: column;
             min-height: 100vh;
         }
 
-        .main-container {
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 40px 20px;
-            width: 100%;
-            box-sizing: border-box;
-            flex: 1;
-        }
-
-        .header-section {
+        /* Top Header */
+        header {
+            background-color: var(--header-bg);
+            border-bottom: 3px solid var(--gold-accent);
+            padding: 14px 10%;
             display: flex;
-            flex-direction: column;
-            gap: 30px;
-            margin-bottom: 40px;
-            border-bottom: 1px solid var(--border-light);
-            padding-bottom: 30px;
-        }
-        @media(min-width: 900px) {
-            .header-section {
-                flex-direction: row;
-                justify-content: space-between;
-                align-items: center;
-            }
-        }
-        
-        .logo-block img {
-            height: 90px;
-            width: auto;
-            display: block;
-        }
-
-        .support-buttons {
-            display: flex;
-            flex-direction: row;
-            gap: 10px;
+            align-items: center;
+            justify-content: space-between;
             flex-wrap: wrap;
+            gap: 15px;
         }
-        .btn-outline {
-            display: block;
-            text-align: center;
-            padding: 10px 15px;
-            border: 1px solid var(--efprp-green);
-            background-color: transparent;
-            color: var(--efprp-green);
+
+        .brand-container {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .brand-container img {
+            height: 42px;
+            width: auto;
+        }
+
+        .portal-title {
+            color: #ffffff;
+            font-size: 16px;
+            font-weight: 400;
+            border-left: 1px solid #444;
+            padding-left: 20px;
+        }
+
+        .header-buttons {
+            display: flex;
+            gap: 12px;
+        }
+
+        .btn-header {
+            padding: 8px 16px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            background: transparent;
+            color: #ffffff;
             border-radius: 4px;
             text-decoration: none;
-            font-size: 0.8rem;
+            font-size: 13px;
             font-weight: 500;
-            transition: all 0.2s;
-        }
-        .btn-outline:hover {
-            background-color: rgba(17, 128, 75, 0.05);
+            transition: all 0.2s ease;
         }
 
-        .hero-title {
-            margin-bottom: 40px;
+        .btn-header:hover {
+            border-color: #ffffff;
+            background-color: rgba(255, 255, 255, 0.1);
         }
-        .hero-title h1 {
-            font-family: 'Montserrat', sans-serif;
-            margin: 0 0 10px 0;
-            font-size: 2.2rem;
-            color: var(--efprp-green);
+
+        /* Main Content Container */
+        main {
+            flex: 1;
+            padding: 45px 10%;
+            max-width: 1000px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        h1 {
+            font-size: 30px;
             font-weight: 300;
-        }
-        .hero-title h1 strong { font-weight: 700; }
-        .hero-title p {
-            font-family: 'Montserrat', sans-serif;
-            margin: 0;
-            font-size: 0.95rem;
-            color: var(--text-dark);
-        }
-
-        .info-section { 
-            width: 100%; 
-            margin-bottom: 50px;
-        }
-        details { border-bottom: 1px solid var(--border-light); }
-        summary {
-            font-family: 'Montserrat', sans-serif;
-            padding: 20px 0; font-size: 1.1rem; font-weight: 500;
-            cursor: pointer; list-style: none; outline: none;
-            display: flex; justify-content: space-between; align-items: center;
-            color: var(--text-dark);
-        }
-        summary::-webkit-details-marker { display: none; }
-        summary::after {
-            content: '';
-            display: inline-block;
-            width: 8px; height: 8px;
-            border-right: 2px solid var(--text-muted);
-            border-bottom: 2px solid var(--text-muted);
-            transform: rotate(45deg);
-            transition: transform 0.3s;
-        }
-        details[open] summary::after { transform: rotate(-135deg); }
-        .details-content { padding: 0 0 20px 0; font-size: 0.95rem; color: var(--text-muted); line-height: 1.6; }
-        .details-content a { color: var(--efprp-green); text-decoration: underline; }
-
-        .auth-card {
-            background: #FFFFFF;
-            border: 1px solid var(--border-light);
-            border-radius: 12px;
-            padding: 40px;
-            width: 100%; max-width: 500px;
-            margin: 20px auto 60px auto;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.04);
+            color: var(--efprp-green-dark);
+            margin-bottom: 12px;
             text-align: center;
+        }
+
+        .subtitle {
+            font-size: 15px;
+            color: var(--text-muted);
+            max-width: 750px;
+            line-height: 1.5;
+            margin: 0 auto 35px auto;
+            text-align: center;
+        }
+
+        /* Info Section (FAQ) */
+        .info-section {
+            max-width: 750px;
+            margin: 0 auto 40px auto;
+        }
+        
+        details {
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        summary {
+            padding: 15px 0;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            list-style: none;
+            outline: none;
+            color: var(--efprp-green-dark);
+        }
+        
+        summary::-webkit-details-marker { display: none; }
+        
+        .details-content {
+            padding-bottom: 20px;
+            font-size: 14px;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+        
+        .details-content p {
+            margin-bottom: 10px;
+        }
+        
+        .details-content a {
+            color: var(--efprp-green);
+            text-decoration: underline;
+        }
+
+        /* Verification Workstation Box */
+        .workstation {
+            background: #ffffff;
+            border: 1px solid var(--border-color);
+            padding: 35px;
+            border-radius: 4px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .drop-area {
+            border: 2px dashed #b5c4bc;
+            background-color: #fafcfb;
+            padding: 40px 20px;
+            text-align: center;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .drop-area:hover {
+            border-color: var(--efprp-green);
+            background-color: #f1f7f4;
+        }
+
+        .drop-area p {
+            font-size: 15px;
+            color: var(--text-muted);
+        }
+
+        .drop-area strong {
+            color: var(--efprp-green);
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            margin: 25px 0;
+            color: var(--text-muted);
+            font-size: 12px;
+            text-transform: uppercase;
+        }
+
+        .divider::before, .divider::after {
+            content: '';
+            flex: 1;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .divider:not(:empty)::before { margin-right: 1em; }
+        .divider:not(:empty)::after { margin-left: 1em; }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 14px;
+            background-color: #fafcfb;
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            border-radius: 4px;
+            font-size: 15px;
+            text-align: center;
+            margin-bottom: 15px;
             box-sizing: border-box;
         }
-        .auth-card-title {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 1.1rem;
-            font-weight: 700;
-            margin-bottom: 25px;
-            color: var(--text-dark);
-            text-transform: uppercase;
-            letter-spacing: 1px;
+
+        input[type="text"]:focus {
+            outline: none;
+            border-color: var(--efprp-green);
         }
-        
-        .btn-scan {
-            background-color: var(--efprp-green);
-            color: #fff; border: none; padding: 16px 28px;
-            border-radius: 6px; font-size: 1rem; font-weight: 600;
-            cursor: pointer; width: 100%; text-transform: uppercase;
-            transition: background-color 0.3s;
-        }
-        .btn-scan:hover { background-color: var(--efprp-green-hover); }
-        
-        .divider { display: flex; align-items: center; margin: 25px 0; color: var(--text-muted); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; }
-        .divider::before, .divider::after { content: ''; flex: 1; border-bottom: 1px solid var(--border-light); }
-        .divider:not(:empty)::before { margin-right: .5em; }
-        .divider:not(:empty)::after { margin-left: .5em; }
-        
-        input[type="text"] {
-            width: 100%; padding: 16px; background-color: var(--bg-light);
-            border: 1px solid var(--border-light); color: var(--text-dark);
-            border-radius: 6px; font-size: 1rem; text-align: center; margin-bottom: 15px; box-sizing: border-box;
-            transition: border-color 0.3s;
-        }
-        input[type="text"]:focus { outline: none; border-color: var(--efprp-green); }
-        
+
         .btn-submit {
-            width: 100%; padding: 16px; background-color: var(--bg-light);
-            color: var(--text-dark); border: 1px solid var(--border-light);
-            border-radius: 6px; font-size: 1rem; font-weight: 600; cursor: pointer;
-            transition: all 0.3s;
+            width: 100%;
+            padding: 14px;
+            background-color: var(--efprp-green);
+            color: #ffffff;
+            border: none;
+            border-radius: 4px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s;
         }
-        .btn-submit:hover { background-color: var(--border-light); }
 
-        .system-msg { margin-top: 20px; padding: 12px; border-radius: 6px; font-weight: 500; font-size: 0.9rem; display: none; }
-        .msg-success { background-color: rgba(17, 128, 75, 0.1); border: 1px solid var(--efprp-green); color: var(--efprp-green); }
-        .msg-error { background-color: rgba(239, 68, 68, 0.1); border: 1px solid var(--efprp-red); color: var(--efprp-red); }
+        .btn-submit:hover {
+            background-color: var(--efprp-green-dark);
+        }
         
-        #result-panel { display: none; margin-top: 30px; }
+        .btn-submit:disabled {
+            background-color: #b5c4bc;
+            cursor: not-allowed;
+        }
+
+        /* Results & System Messages */
+        .system-msg {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 4px;
+            font-size: 14px;
+            display: none;
+        }
+        
+        .msg-success {
+            background-color: #edf7ed;
+            border: 1px solid #c8e6c9;
+            color: #1e4620;
+        }
+        
+        .msg-error {
+            background-color: #fdecea;
+            border: 1px solid #f5c6cb;
+            color: #5c1d24;
+        }
+
+        #result-panel {
+            display: none;
+            margin-top: 20px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
         .digital-id {
-            background: var(--bg-light);
-            border: 1px solid var(--border-light); border-radius: 8px;
-            padding: 20px; display: flex; align-items: center; text-align: left;
+            background: #fafcfb;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            text-align: left;
         }
-        .digital-id.terminated-bg { background: rgba(239, 68, 68, 0.05); border-color: rgba(239, 68, 68, 0.2); }
         
-        .id-photo { 
-            width: 80px; 
-            height: 80px; 
-            border-radius: 50%; 
-            border: 2px solid var(--efprp-green); 
-            margin-right: 20px; 
-            object-fit: cover; 
+        .digital-id.terminated-bg {
+            background-color: #fdecea;
+            border-color: #f5c6cb;
         }
-        .terminated-bg .id-photo { border-color: var(--efprp-red); }
-        .id-data p { margin: 0 0 4px 0; font-size: 0.75rem; color: var(--text-muted); }
-        .id-data strong { color: var(--text-dark); font-size: 0.9rem; display: block; font-weight: 600; }
-        .status-pill { display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 0.7rem; font-weight: 700; margin-top: 5px; }
-        .status-active { background-color: var(--efprp-green); color: #fff; }
-        .status-terminated { background-color: var(--efprp-red); color: #fff; }
-        
-        .clearance-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 15px; }
-        .clearance-box { background-color: #fff; border: 1px solid var(--border-light); border-radius: 6px; padding: 12px 5px; text-align: center; }
-        .clearance-label { display: block; color: var(--text-muted); font-size: 0.6rem; text-transform: uppercase; margin-bottom: 4px; }
-        .clearance-value { font-weight: 700; font-size: 0.75rem; }
 
-        .site-footer {
-            padding: 40px 20px; text-align: center;
-            font-size: 0.75rem; color: var(--text-muted); line-height: 1.6;
-            background-color: var(--bg-light); border-top: 1px solid var(--border-light);
+        .id-photo {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: 2px solid var(--efprp-green);
+            margin-right: 20px;
+            object-fit: cover;
         }
-        .footer-content { max-width: 1000px; margin: 0 auto; text-align: left; }
+        
+        .terminated-bg .id-photo {
+            border-color: #5c1d24;
+        }
+
+        .id-data p {
+            margin: 0 0 4px 0;
+            font-size: 12px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+        
+        .id-data strong {
+            color: var(--text-main);
+            font-size: 15px;
+            display: block;
+            font-weight: 600;
+            text-transform: none;
+        }
+        
+        .status-pill {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 700;
+            margin-top: 8px;
+            text-transform: uppercase;
+        }
+        
+        .status-active { background-color: var(--efprp-green); color: #fff; }
+        .status-terminated { background-color: #5c1d24; color: #fff; }
+
+        .clearance-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .clearance-box {
+            background-color: #ffffff;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            padding: 12px 5px;
+            text-align: center;
+        }
+        
+        .clearance-label {
+            display: block;
+            color: var(--text-muted);
+            font-size: 11px;
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+        
+        .clearance-value {
+            font-weight: 600;
+            font-size: 13px;
+        }
+
+        /* Institutional Footer */
+        footer {
+            background-color: var(--footer-bg);
+            padding: 35px 10%;
+            border-top: 1px solid var(--border-color);
+            font-size: 12.5px;
+            color: var(--text-muted);
+        }
+        
+        .footer-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 22px;
+            border-bottom: 1px solid #cdd6d0;
+            margin-bottom: 20px;
+        }
+        
+        .footer-top img {
+            height: 38px;
+            filter: brightness(0);
+        }
+        
+        .footer-links {
+            display: flex;
+            gap: 22px;
+        }
+        
+        .footer-links a {
+            color: var(--efprp-green);
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .footer-legal {
+            text-align: center;
+            line-height: 1.6;
+        }
+        
+        .footer-legal a {
+            color: var(--efprp-green);
+        }
+        
+        @media (max-width: 768px) {
+            /* Header adjustments */
+            header { justify-content: center; padding: 16px 20px; }
+            .header-buttons { width: 100%; justify-content: center; flex-wrap: wrap; }
+            .brand-container { margin-bottom: 10px; }
+            
+            /* Main content padding and typography */
+            main { padding: 30px 20px; }
+            h1 { font-size: 24px; }
+            .workstation { padding: 25px 15px; }
+            
+            /* Digital ID Card stacking */
+            .digital-id { flex-direction: column; text-align: center; }
+            .id-photo { margin-right: 0; margin-bottom: 15px; }
+            
+            /* Footer stacking */
+            footer { padding: 30px 20px; }
+            .footer-top { flex-direction: column; gap: 20px; }
+            .footer-links { flex-wrap: wrap; justify-content: center; gap: 15px; }
+        }
     </style>
 </head>
 <body>
 
-    <main class="main-container">
-        
-        <div class="header-section">
-            <div class="logo-block">
-                <img src="https://www.efprp.org/web/image/2104-b8c01a69/Copie%20de%20EFPRP_LARGE_GOOGLE_LOGO%20%28182%20x%2050%20px%29.webp" alt="EFPRP Official Logo">
-            </div>
-            <div class="support-buttons">
-                <a href="mailto:support@efprp.org" class="btn-outline">Contact General Support</a>
-                <a href="mailto:internal@efprp.org" class="btn-outline">Contact IS&IA Department | Report Submission</a>
-            </div>
+    <header>
+        <div class="brand-container">
+            <img src="logo.png" alt="EFPRP Logo">
+            <span class="portal-title">EFPRP TrueID Verification</span>
         </div>
+        <div class="header-buttons">
+            <a href="https://support.efprp.org" class="btn-header" target="_blank">Contact Support</a>
+            <a href="https://report.isia.efprp.org/" class="btn-header" target="_blank">Submit a Report</a>
+        </div>
+    </header>
 
-        <div class="hero-title">
-            <h1><strong>EFPRP</strong> TrueID Verification</h1>
-            <p><strong>Fighting</strong> against <strong>scams, fraud and impersonation.</strong></p>
-        </div>
+    <main>
+        <h1>TrueID Authentication</h1>
+        <p class="subtitle">
+            Instantly verify the credentials of an EFPRP Pro-Bono Operative (PBO) to authenticate volunteers and prevent fraud, identity theft, or impersonation.
+        </p>
 
         <div class="info-section">
-            <details open>
+            <details>
                 <summary>What is the EFPRP TrueID Verification?</summary>
                 <div class="details-content">
-                    <p>This ID Verification flow is used to <strong>verify the ID of an EFPRP PBO (Pro-Bono Operative)</strong>. We implemented this service to allow <strong>everyone to authenticate our volunteers or PBOs to prevent fraud, identity theft or impersonation.</strong></p>
-                    <p>The use of this service is <strong>free and open-source</strong>. To verify an ID, simply input or scan the ID number (<em>present on the barcode</em>) behind the EFPRP ID. If the output shows a PBO, the <strong>ID is verified</strong>, else, <strong>there is no PBO or volunteer associated with the ID number or ID itself.</strong></p>
-                    <p>This website is <strong>owned, maintained and updated</strong> by the <em>European Fire Prevention & Rural Preservation Organization (EFPRP)</em> (<a href="https://www.efprp.org" target="_blank">www.efprp.org</a>). For any questions or concerns, please, contact the Support Team.</p>
+                    <p>This ID Verification flow is used to verify the ID of an EFPRP PBO. We implemented this service to allow everyone to authenticate our volunteers or PBOs to prevent fraud, identity theft or impersonation.</p>
+                    <p>The use of this service is free and open-source. To verify an ID, simply input or scan the ID number (present on the barcode) behind the EFPRP ID. If the output shows a PBO, the ID is verified, else, there is no PBO or volunteer associated with the ID number or ID itself.</p>
+                    <p>This website is owned, maintained and updated by the <em>European Fire Prevention & Rural Preservation Organization (EFPRP)</em> (<a href="https://www.efprp.org" target="_blank">www.efprp.org</a>).</p>
                 </div>
             </details>
-
             <details>
                 <summary>The ID doesn't exist. What do I do?</summary>
                 <div class="details-content">
-                    <p>If, after you checked multiple times for errors or typos, <strong>the ID you tried to verify, doesn't exist</strong>, please, select the option <em>"Contact IS&IA Department"</em> mentioning the ID you tried to verify, any evidence (photo, audio, video) from the individual that was carrying the EFPRP Identification and the location of the incident.</p>
-                    <p>Our Internal Affairs Division will investigate this matter and <strong>coordinate with local law enforcement to clarify the situation</strong>. Each step of the way, you will be informed and updated.</p>
-                    <p><strong>All IS&IA contact remains confidential.</strong></p>
+                    <p>If, after you checked multiple times for errors or typos, the ID you tried to verify doesn't exist, please submit a report detailing the ID you tried to verify, any evidence (photo, audio, video) from the individual that was carrying the EFPRP Identification, and the location of the incident.</p>
+                    <p>Our Internal Affairs Division will investigate this matter and coordinate with local law enforcement to clarify the situation. All IS&amp;IA contact remains confidential.</p>
                 </div>
             </details>
         </div>
 
-        <div class="auth-card">
-            <div class="auth-card-title">Identity Authentication</div>
-
+        <div class="workstation">
             <input type="file" id="camera-input" accept="image/jpeg, image/png, image/webp" capture="environment" style="display: none;">
             <div id="hidden-reader" style="display: none;"></div>
 
-            <button class="btn-scan" onclick="document.getElementById('camera-input').click()">Capture ID Photo</button>
+            <div class="drop-area" onclick="document.getElementById('camera-input').click()">
+                <p id="dropText"><strong>Click to Capture ID Photo</strong> or select an image file</p>
+            </div>
 
             <div class="divider">OR MANUAL ENTRY</div>
 
-            <input type="text" id="inputId" placeholder="Enter ID Number" autocomplete="off">
-            <button class="btn-submit" onclick="verifyId()">Verify ID</button>
+            <input type="text" id="inputId" placeholder="Enter EFPRP ID Number" autocomplete="off">
+            <button class="btn-submit" onclick="verifyId()">Verify Identity</button>
             
             <div id="system-message" class="system-msg"></div>
 
@@ -296,18 +490,34 @@
                 </div>
 
                 <div id="clearance-container" class="clearance-grid" style="display:none;">
-                    <div class="clearance-box"><span class="clearance-label">EIRT Auth</span><span id="eirtStatus" class="clearance-value"></span></div>
-                    <div class="clearance-box"><span class="clearance-label">AWID Status</span><span id="awidStatus" class="clearance-value"></span></div>
+                    <div class="clearance-box">
+                        <span class="clearance-label">EIRT Auth</span>
+                        <span id="eirtStatus" class="clearance-value"></span>
+                    </div>
+                    <div class="clearance-box">
+                        <span class="clearance-label">AWID Status</span>
+                        <span id="awidStatus" class="clearance-value"></span>
+                    </div>
                 </div>
             </div>
         </div>
 
     </main>
 
-    <footer class="site-footer">
-        <div class="footer-content">
-            <p>Copyright © European Fire Prevention & Rural Preservation Organization (EFPRP) - All rights reserved.</p>
-            <p>European Fire Prevention & Rural Preservation Organization (EFPRP) - A non-profit organization registered in France under the RNA number W313039674. Check official documentation on how to prevent scams and fraud <a href="https://support.efprp.org" target="_blank">here</a>. Official EFPRP addresses always end in @efprp.org. This website does not use any type of cookies, nor stores any type of data.</p>
+    <footer>
+        <div class="footer-top">
+            <img src="logo.png" alt="EFPRP Logo">
+            <div class="footer-links">
+                <a href="https://www.efprp.org/privacy-policy/">Privacy Policy</a>
+                <a href="https://www.efprp.org/copyright">Copyright</a>
+                <a href="https://www.efprp.org/trademark-policy">Trademark Policy</a>
+                <a href="mailto:copyright@efprp.org">Copyright infringement</a>
+                <a href="mailto:abuse@efprp.org">Abuse reporting</a>
+            </div>
+        </div>
+        <div class="footer-legal">
+            European Fire Prevention &amp; Rural Preservation Organization (EFPRP), 1 Impasse Andre Marfaing, 31400, Toulouse, France - A non-profit organization registered in France under the RNA number W313039674 and the international D-U-N-S number 283168186. Locally registered in France (Europe) under the SIREN 934482746 and SIRET 93448274600013. EU Transparency Registry REG Number 9015672101914-95. <em>Note: This site does not use cookies, nor stores any type of data.</em><br><br>
+            <strong>Abuse reporting &amp; copyright infringement contact:</strong> <a href="mailto:copyright@efprp.org">Copyright infringement</a> &middot; <a href="mailto:abuse@efprp.org">Abuse reporting</a>.
         </div>
     </footer>
 
@@ -425,7 +635,7 @@
                 displayMessage('error', "Verification service unreachable. Please retry shortly.");
             } finally {
                 submitBtn.disabled = false;
-                submitBtn.textContent = "Verify ID";
+                submitBtn.textContent = "Verify Identity";
             }
         }
     </script>
